@@ -1,6 +1,7 @@
 
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { AntDesing } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { TextInput, View, StyleSheet } from "react-native";
 
 export default function DetailsScreen({navigation}) {
@@ -13,7 +14,7 @@ export default function DetailsScreen({navigation}) {
             backgroundColor: '#f0f0f0'
         },
         headerRight: () => (
-            <AntDesing
+            <Feather
                 style={styles.navButton}
                 name="save"
                 size={24}

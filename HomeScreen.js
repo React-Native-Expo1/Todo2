@@ -1,6 +1,7 @@
 import React, { useState, useLayoutEffect, useEffect } from "react"
 import { ScrollView, View, StyleSheet, Text } from "react-native";
 import {AntDesing} from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 export default function HomeScreen({route, navigation}) {
     const [todos, setTodos] = useState(
@@ -19,21 +20,22 @@ export default function HomeScreen({route, navigation}) {
             headerStyle: {
                 backroundColor: '#f0f0f0'
             },
-    /*       headerRight: () => (
-                <AntDesing
+            headerRight: () => (
+                <Feather
                     style={styles.navButton}
                     name="plus"
                     size={24}
                     color="black"
                     onPress={ () => navigation.navigate('Todo')}
 
-                /> 
-            ),  */
+                />  
+            ),  
         }) 
     }, [])
 
     return (
         <View style={styles.container}>
+   
             <ScrollView>
                 {
                     todos.map((todo,index) => (
@@ -44,6 +46,7 @@ export default function HomeScreen({route, navigation}) {
                 }
             </ScrollView>
         </View>
+
     )
 }
 
