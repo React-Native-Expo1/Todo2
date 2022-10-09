@@ -9,11 +9,12 @@ export default function HomeScreen({route, navigation}) {
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
+       // AsyncStorage.clear();
         if(route.params?.todo) {
             const newKey = todos.lenght + 1;
             const newTodo = {key: newKey.toString(),descpriction: route.params.todo};
             const newTodos = [...todos, newTodo];
-            storeData(newTodos);
+            storeData(newTodos);           
         }
         getData();
     },[route.params?.todo])
