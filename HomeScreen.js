@@ -1,18 +1,21 @@
 import React, { useState, useLayoutEffect, useEffect } from "react"
 import { ScrollView, View, StyleSheet, Text } from "react-native";
-import {AntDesing} from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const STORAGE_KEY = '@todo_key'
 
 export default function HomeScreen({route, navigation}) {
-    const [todos, setTodos] = useState(
-        Array(20).fill('').map((_,i)=> (`Test ${i}`))
-    );
+    const [todos, setTodos] = useState([]);
 
     useEffect(() => {
         if(route.params?.todo) {
-            const newTodos = [...todos, route.params.todo];
-            setTodos(newTodos);
+            const newKey = todos.lenght + 1;
+            const newTodo = {key: newKey.toString(),descpriction: route.params.todo};
+            const newTodos = [...todos, newTodo];
+            storeData(newTodos);
         }
+        getData();
     },[route.params?.todo])
 
     useLayoutEffect( () => {
@@ -32,14 +35,39 @@ export default function HomeScreen({route, navigation}) {
         }) 
     }, [])
 
+    const storeData = async (value) => {
+        try{
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem(STORAGE_KEY,jsonValue);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const getData = async() => {
+        try{
+            return AsyncStorage.getItem(STORAGE_KEY)
+            .then (req => JSON.parse(req))
+            .then (json => {
+                if (json === null) {
+                    json = []
+                }
+                setTodos(json);
+            })
+            .catch (error => console.log(error));
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
         <View style={styles.container}>
    
             <ScrollView>
                 {
-                    todos.map((todo,index) => (
-                        <View key={index} style={styles.rowContainer}>
-                            <Text style={styles.rowText}>{todo}</Text>
+                    todos.map((todo) => (
+                        <View style={styles.rowContainer} key={todo.key}>
+                            <Text style={styles.rowText}>{todo.descpriction}</Text>
                         </View>
                     ))
                 }
