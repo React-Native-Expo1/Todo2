@@ -36,7 +36,7 @@ export default function HomeScreen({route, navigation}) {
     useEffect(() => {
        // AsyncStorage.clear();
         if(route.params?.todo) {
-            const newKey = todos.lenght + 1;
+            const newKey = todos.length + 1;
             const newTodo = {key: newKey.toString(), descpriction: route.params.todo};
             const newTodos = [...todos, newTodo];
             storeData(newTodos);           
@@ -60,6 +60,8 @@ export default function HomeScreen({route, navigation}) {
             ),  
         }) 
     }, [])
+
+    console.log(todos)
 
     return (
         <View style={styles.container}>
