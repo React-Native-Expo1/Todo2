@@ -8,34 +8,6 @@ const STORAGE_KEY = '@todo_key'
 export default function HomeScreen({route, navigation}) {
     const [todos, setTodos] = useState([]);
 
-    useEffect(() => {
-       // AsyncStorage.clear();
-        if(route.params?.todo) {
-            const newKey = todos.lenght + 1;
-            const newTodo = {key: newKey.toString(),descpriction: route.params.todo};
-            const newTodos = [...todos, newTodo];
-            storeData(newTodos);           
-        }
-        getData();
-    },[route.params?.todo])
-
-    useLayoutEffect( () => {
-        navigation.setOptions({
-            headerStyle: {
-                backroundColor: '#f0f0f0'
-            },
-            headerRight: () => (
-                <Feather
-                    style={styles.navButton}
-                    name="plus"
-                    size={24}
-                    color="black"
-                    onPress={ () => navigation.navigate('Todo')}
-                />  
-            ),  
-        }) 
-    }, [])
-
     const storeData = async (value) => {
         try{
             const jsonValue = JSON.stringify(value);
@@ -60,6 +32,34 @@ export default function HomeScreen({route, navigation}) {
             console.log(e);
         }
     }
+
+    useEffect(() => {
+       // AsyncStorage.clear();
+        if(route.params?.todo) {
+            const newKey = todos.lenght + 1;
+            const newTodo = {key: newKey.toString(), descpriction: route.params.todo};
+            const newTodos = [...todos, newTodo];
+            storeData(newTodos);           
+        }
+        getData();
+    },[route.params?.todo])
+
+    useLayoutEffect( () => {
+        navigation.setOptions({
+            headerStyle: {
+                backroundColor: '#f0f0f0'
+            },
+            headerRight: () => (
+                <Feather
+                    style={styles.navButton}
+                    name="plus"
+                    size={24}
+                    color="black"
+                    onPress={ () => navigation.navigate('Todo')}
+                />  
+            ),  
+        }) 
+    }, [])
 
     return (
         <View style={styles.container}>
